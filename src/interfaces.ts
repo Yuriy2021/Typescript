@@ -7,5 +7,9 @@ export interface ISearchFormData {
     city: string,
     checkInDate: Date,
     checkOutDate: Date,
-    maxPrice: number | null
+    maxPrice: string| number | null
+}
+
+export interface IPlace {
+    
 }
