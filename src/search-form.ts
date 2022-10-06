@@ -1,5 +1,5 @@
 import { renderBlock } from './lib.js'
-import { ISearchFormData, IPlace } from './interfaces';
+import { ISearchFormData, IPlace } from './interfaces.js';
 
 const frmSearch = document.getElementById('frmSearch');
 frmSearch?.addEventListener('submit', (e) =>{
