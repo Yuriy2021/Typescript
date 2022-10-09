@@ -1,4 +1,42 @@
 import { renderBlock } from './lib.js'
+import { ISearchFormData, IPlace } from './interfaces.js';
+
+const frmSearch = document.getElementById('frmSearch');
+frmSearch?.addEventListener('submit', (e) =>{
+  e.preventDefault();
+  const inpCity = frmSearch.querySelector('#city') as HTMLInputElement;
+  const inpCheckInDate = frmSearch.querySelector('#check-in-date') as HTMLInputElement;
+  const inpCheckOutDate = frmSearch.querySelector('#check-out-date') as HTMLInputElement;
+  const inpMaxPrice = frmSearch.querySelector('#max-price') as HTMLInputElement;
+  const searchFormData: ISearchFormData = {
+    city: inpCity.value,
+    checkInDate: new Date(inpCheckInDate.value),
+    checkOutDate: new Date(inpCheckOutDate.value),
+    maxPrice: inpMaxPrice.value === '' ? null: inpMaxPrice.value
+  }; 
+  search (searchFormData, searchCallback);
+});
+interface ISearchCallback {
+  (error?:Error | IPlace, places?:IPlace[]):void
+};
+const searchCallback:ISearchCallback = (error, places) => {
+  console.log('searchCallback', error, places);
+}
+export function search (data:ISearchFormData, searchCallback:ISearchCallback) {
+  console.log ('function search searchFormData = ', data);
+  const a = Boolean(Math.random() <0.5);
+  if (a)
+  setTimeout(() =>{
+    searchCallback(Error('error'));
+  }, 2000)
+  
+  else {
+    const places:IPlace[] = [];
+    searchCallback (places);
+  }
+}
+
+
 
 export function renderSearchFormBlock () {
 

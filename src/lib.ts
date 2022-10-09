@@ -16,7 +16,6 @@ export function renderToast (message, action) {
   }
   
   
-  
   renderBlock(
     'toast-block',
     messageText

@@ -1,4 +1,9 @@
 import { renderBlock } from './lib.js'
+// const request = new XMLHttpRequest()
+// request.open('GET', 'https://localhost:3030',true);
+// request.onload = function () {
+//   const data = JSON.parse ()
+// }
 
 export function renderSearchStubBlock () {
   renderBlock(
@@ -24,6 +29,21 @@ export function renderEmptyOrErrorSearchBlock (reasonMessage) {
   )
 }
 
+const toggleFavoriteItem =(event) =>  {
+  const id= event.target.dataset.id
+  const favoritesItem: string[] = getFavoritesList()
+  const isfindItem: unknown = favoritesItem.find(itemId => itemId === id)
+  if (Boolean(isfindItem)) {
+    const newFavoritesItems = favoritesItem.find (itemId => itemId !== id)
+    localStorage.setItem('favoriteItems', newFavoritesItems.join())
+  } else {
+    localStorage.setItem('favoriteItems', [...favoritesItem,id].join())
+  }
+}
+
+const getFavoritesList = () => {
+  return localStorage.getItem('favoritesItems').split(',')
+}
 export function renderSearchResultsBlock () {
   renderBlock(
     'search-results-block',
