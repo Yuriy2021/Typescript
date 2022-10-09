@@ -1,9 +1,12 @@
 import { renderBlock } from './lib.js'
-// const request = new XMLHttpRequest()
-// request.open('GET', 'https://localhost:3030',true);
-// request.onload = function () {
-//   const data = JSON.parse ()
-// }
+fetch('https://localhost:3030')
+
+.then(response => {
+  // handle response data
+})
+.catch(err => {
+  //handle errors
+})
 
 export function renderSearchStubBlock () {
   renderBlock(
