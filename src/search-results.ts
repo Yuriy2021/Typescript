@@ -123,6 +123,18 @@ export function book(placeId: string | number, checkInDate: Date | null, checkOu
     return false
   }
 };
+export function bookStart() {
+  document.querySelectorAll('.result-info--footer button').forEach( (elt) => {
+    elt.addEventListener('click', (ev: MouseEvent) => {    
+      const checkInDate: Date = new Date (document.getElementById('check-in-date').getAttribute('value') )
+      const checkOutDate: Date = new Date ( document.getElementById('check-out-date').getAttribute('value') )      
+      const target = ev.target as Element;
+      const placeId: string | number = target.closest('.result').getAttribute('id').substring(5); 
+      console.log(`${placeId}, ${checkInDate}, ${checkOutDate}`)
+      book(placeId, checkInDate, checkOutDate);
+      });
+  });
+};
 
 export function renderSearchResultsBlock () {
   renderBlock(
