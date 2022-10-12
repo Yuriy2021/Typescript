@@ -97,7 +97,33 @@ const toggleFavoriteItem =(event) =>  {
 
 const getFavoritesList = () => {
   return localStorage.getItem('favoritesItems').split(',')
-}
+};
+export function book(placeId: string | number, checkInDate: Date | null, checkOutDate: Date | null) { 
+ if (placeId && checkInDate && checkOutDate) {
+  const data = responseToJson(fetch(
+      `http://localhost:3030/places/${placeId}?` +
+      `checkInDate=${dateToUnixStamp(checkInDate)}&` +
+      `checkOutDate=${dateToUnixStamp(checkOutDate)}&`,
+      {method: 'PATCH'}
+    ));
+    if (data) {
+      const bookRes = {
+        'id': placeId, 
+        'checkIn': checkInDate.getTime(), 
+        'checkOut': checkOutDate.getTime()
+      }
+      localS.set('booked', bookRes )
+      renderToast(
+        { text: `Вы забронировали номер ${placeId} с ${new Date(checkInDate).toLocaleString('ru-RU')} по ${new Date(checkOutDate).toLocaleString('ru-RU')}`, type: 'success' },
+        { name: 'Ок', handler: () => { console.log('Уведомление закрыто') } }
+      )
+    }
+  }
+  else {
+    return false
+  }
+};
+
 export function renderSearchResultsBlock () {
   renderBlock(
     'search-results-block',
