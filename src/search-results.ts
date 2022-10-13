@@ -112,7 +112,7 @@ export function book(placeId: string | number, checkInDate: Date | null, checkOu
         'checkIn': checkInDate.getTime(), 
         'checkOut': checkOutDate.getTime()
       }
-      localS.set('booked', bookRes )
+      localStorage.set('booked', bookRes )
       renderToast(
         { text: `Вы забронировали номер ${placeId} с ${new Date(checkInDate).toLocaleString('ru-RU')} по ${new Date(checkOutDate).toLocaleString('ru-RU')}`, type: 'success' },
         { name: 'Ок', handler: () => { console.log('Уведомление закрыто') } }
