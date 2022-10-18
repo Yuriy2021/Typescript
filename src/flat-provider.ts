@@ -1,9 +1,9 @@
-import { Provider } from '../../domain/provider.js'
-import { SearchFilter } from '../../domain/search-filter.js'
-import { HttpHelper } from '../../utils/http-helper.js'
-import { CRoom } from '../../domain/room.js'
-import { IRoomListResponse } from './responce.js'
-import { dateToUnixStamp } from '../../../search.js'
+import { Provider } from './provider.js'
+import { SearchFilter } from './search-filter.js'
+import { HttpHelper } from './http-helper.js'
+import { CRoom } from './room.js'
+import { IRoomListResponse } from './response.js'
+import { dateToUnixStamp } from './search.js'
 
 
 export class FlatProvider implements Provider {
