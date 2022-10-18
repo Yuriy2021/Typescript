@@ -3,7 +3,9 @@ const fetch = require('node-fetch')
 function dateToUnixStamp(date) {
   return date.getTime() / 1000
 }
-
+import { SearchFilter } from './search-filter.js'
+import { HomyProvider } from './homy-provider.js'
+import { FlatProvider } from './flat-provider.js'
 function responseToJson(requestPromise) {
   return requestPromise
     .then((response) => {
@@ -97,7 +99,7 @@ const toggleFavoriteItem =(event) =>  {
 
 const getFavoritesList = () => {
   return localStorage.getItem('favoritesItems').split(',')
-}
+};
 export function renderSearchResultsBlock () {
   renderBlock(
     'search-results-block',
@@ -159,4 +161,48 @@ export function renderSearchResultsBlock () {
     </ul>
     `
   )
+
+searchApartment().then(data => {
+  renderBlock(
+    'search-list-block',
+    data
+  )
+})
+
+const homy = new HomyProvider()
+const flat = new FlatProvider()
+
+const urlParams = new URLSearchParams(window.location.search);
+const checkInDate: Date = new Date(urlParams.get('checkin')) 
+const checkOutDate: Date = new Date(urlParams.get('checkout'))
+const maxPrice: string | null = urlParams.get('price')
+
+const filter: SearchFilter = {
+    city: 'Москва',
+    checkInDate: checkInDate,
+    checkOutDate: checkOutDate,
+    maxPrice: +maxPrice,
+    priceLimit: +maxPrice
 }
+function sortByPrice(one: { priceLimit: number }, two: { priceLimit: number }) {
+   
+  if (one.priceLimit > two.priceLimit) {
+    return 1
+  } else if (one.priceLimit < two.priceLimit) {
+    return -1
+  } else {
+    return 0
+  }
+}
+
+
+Promise.all([
+  homy.find(filter),
+  flat.find(filter)
+]).then((results) => {
+  
+  const allResults = [].concat(results[0], results[1])
+  
+  allResults.sort(sortByPrice)
+})
+};
